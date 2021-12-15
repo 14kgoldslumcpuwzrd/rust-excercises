@@ -10,19 +10,25 @@ const INPUT_MEAN: i32 = 1;
 const INPUT_MEDIAN: i32 = 2;
 const INPUT_MODE: i32 = 3;
 
-fn mean(list: &Vec<i32>) -> i32 {
+fn mean(list: &Vec<i32>) -> f32 {
     println!("Passed into mean: {:?}", list);
-    1
+    let mut sum: i32 = 0;
+    let mut number_of_entries = 0;
+    for entry in list.iter() {
+        sum = sum + entry;
+        number_of_entries = number_of_entries + 1;
+    }
+    (sum as f32) / (number_of_entries as f32)
 }
 
-fn median(list: &Vec<i32>) -> i32 {
+fn median(list: &Vec<i32>) -> f32 {
     println!("Passed into median: {:?}", list);
-    2
+    2.0
 }
 
-fn mode(list: &Vec<i32>) -> i32 {
+fn mode(list: &Vec<i32>) -> f32 {
     println!("Passed into mode: {:?}", list);
-    3
+    3.0
 }
 
 
@@ -42,6 +48,7 @@ fn main() {
 
     loop {
         println!("Please input a number to the list, or a non-number to end inputs:");
+        println!("Range: [-2147483647, 2147483648]\n");
 
         let mut current_input = String::new();
 
@@ -77,7 +84,7 @@ fn main() {
             }
         };
 
-        let decision: i32 = match numerical_input {
+        let decision: f32 = match numerical_input {
             INPUT_MEAN => mean(&numbers_list),
             INPUT_MEDIAN => median(&numbers_list),
             INPUT_MODE => mode(&numbers_list),
@@ -86,7 +93,7 @@ fn main() {
                 break;
             }
         };
-        println!("You chose option {}", decision);
+        println!("The average is: {}", decision);
         break;
     }
 
