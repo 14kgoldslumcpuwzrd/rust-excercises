@@ -23,7 +23,27 @@ fn mean(list: &Vec<i32>) -> f32 {
 
 fn median(list: &Vec<i32>) -> f32 {
     println!("Passed into median: {:?}", list);
-    2.0
+    let mut sorted: Vec<i32> = list.to_vec();
+    let mut index: usize = 0;
+    sorted.sort();
+    let number_of_entries: i32 = sorted.len() as i32;
+    println!("Sorted list: {:?}", sorted);
+
+    match number_of_entries % 2 {
+        0 => { // even
+            println!("Even number of entries!");
+            2.0
+        },
+        _ => { // odd
+            index = (number_of_entries / 2) as usize;
+            let value: i32 = match sorted.get(index) {
+                Some(num) => *num,
+                None => panic!("Index error in odd median block!")
+            };
+            value as f32
+        }
+    }
+
 }
 
 fn mode(list: &Vec<i32>) -> f32 {
