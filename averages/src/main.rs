@@ -5,6 +5,8 @@
  */
 
 use std::io;
+use std::iter::FromIterator;
+use std::collections::HashSet;
 
 const INPUT_MEAN: i32 = 1;
 const INPUT_MEDIAN: i32 = 2;
@@ -56,10 +58,43 @@ fn median(list: &Vec<i32>) -> f32 {
 }
 
 fn mode(list: &Vec<i32>) -> f32 {
-    println!("Passed into mode: {:?}", list);
+    if list.len() == 0 || list.len() == 1 {
+        panic!("No modes exist for empty lists!");
+    }
+    let set: HashSet<i32> = hashset(&list);
+
+    if set.len() < list.len() { // there exists duplicates
+        let mut first_index = 0;
+        let mut second_index = 1;
+        let mut highest_counter = 0;
+        let mut highest_element_index = first_index;
+        
+        let mut current_counter = 0;
+        loop {
+            if (list[first_index] == list[second_index]) {
+                current_counter+=1;
+            }
+            else {
+                if (current_counter > highest_counter) {
+                    highest_counter = current_counter;
+                    highest_element_index = first_index;
+                }
+                if (first_index == list.len() -1) {
+                    break;
+                }
+            }
+        }
+    }
+    else {
+        panic!("No modes exist for this list!");
+    }
     3.0
 }
 
+fn hashset(data: &[i32]) -> HashSet<i32> {
+    let set = HashSet::from_iter(data.iter().cloned());
+    set
+}
 
 fn main() {
     println!(" 
